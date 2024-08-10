@@ -28,11 +28,11 @@ export default function RootLayout({
           >
             <div className="grid grid-cols-12 gap-1">
 
-              <sidebar className="col-span-3 sm:col-span-2">
+              <sidebar className="col-span-2 sm:col-span-3">
               <Sidebar />
               </sidebar>
 
-              <div className="flex flex-col h-[87vh] col-span-9 sm:col-span-10  overflow-auto rounded-lg bg-purple-200 w-full">
+              <div className="flex flex-col h-[87vh] col-span-10 sm:col-span-9 flex-shrink overflow-auto rounded-lg bg-purple-200 w-full">
                 {/* <Header /> */}
                 <main className="mx-8 my-4">{children}</main>
               </div>
