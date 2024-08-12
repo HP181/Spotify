@@ -1,6 +1,7 @@
 import "@/app/globals.css";
 import { NextAuthProvider } from "@/Providers/NextAuthProvider";
 import { Montserrat } from "next/font/google";
+import { getServerSession } from "next-auth";
 
 const fontFamily = Montserrat({ subsets: ["latin"] });
 
@@ -9,12 +10,15 @@ export const metadata = {
   description: "Login page to authenticate through Spotify",
 };
 
-export default function LoginPageLayout({
+export default async function LoginPageLayout({
   children,
 }) {
+
+  const session = await getServerSession();
+
   return (
     <html lang="en">
-      <NextAuthProvider>
+      <NextAuthProvider session={session}>
         <body className={fontFamily.className + " text-white bg-black"}>
           <main>{children}</main>
         </body>
