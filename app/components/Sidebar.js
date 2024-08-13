@@ -18,9 +18,11 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import SpotifyContext from "../Context/SpotifyContext";
 import SidebarCards from "./Sidebar/SidebarCards";
+import PlayListCards from "./PlayLists/PlayListCards";
 
 const Sidebar = () => {
   const [data, setData] = useState(null);
+  const [PlayListdata, setPlayListdata] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -49,9 +51,27 @@ const Sidebar = () => {
     }
   };
 
+  const getPlaylists = async () => {
+    try {
+      const data = await fetch("https://api.spotify.com/v1/me/playlists", {
+        method : "get",
+        headers: {
+          'Authorization': `Bearer ${session?.accessToken}`,
+        },
+      })
+
+      const response = await data?.json();
+      setPlayListdata(response)
+      console.log("pl res", response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     if (session) {
       getDataa();
+      getPlaylists();
     }
   }, [session]);
 
@@ -87,6 +107,9 @@ const Sidebar = () => {
         <p className="hidden sm:block font-semibold">Search</p>
       </Link>
 
+<section className="overflow-scroll scrollbar-hide">
+  
+
       <section className="flex justify-between items-center  text-xs sm:text-lg lg:gap-x-5">
         <div className="flex justify-between items-center gap-x-2 text-[#b3b3b3] hover:text-white hover:cursor-pointer transition-all duration-150 ease-in-out">
           <BiLibrary size="24" className="hidden" />
@@ -110,6 +133,13 @@ const Sidebar = () => {
       </section>
 
 <SidebarCards data={data}/>
+
+<PlayListCards data={PlayListdata}/>
+
+</section>
+<section>
+
+</section>
     </div>
   );
 };

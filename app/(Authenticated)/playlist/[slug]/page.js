@@ -7,11 +7,13 @@ import SpotifyContext from "@/app/Context/SpotifyContext";
 import TrackList from "@/app/components/TrackList";
 import { shuffle } from "lodash";
 import { Button } from "@/components/ui/button";
+import PlayListTracks from "@/app/components/PlayLists/PlayListTracks";
 
 const page = ({ params }) => {
   const [SelectedItem, setSelectedItem] = useState(null);
   const [Duration, setDuration] = useState("");
   const [color, setColor] = useState('');
+
 
   const colors = [
     "from-indigo-500",
@@ -30,27 +32,23 @@ const page = ({ params }) => {
     setColor(shuffle(colors).pop());
   }, [params]);
 
-  useEffect(() => {
-    const selecteditem = ContextData?.GlobalSelectedItem?.find(item => item.album.id === params?.slug);
-    const sid = ContextData?.GlobalSelectedItem?.findIndex(item => item.album.id === params?.slug);
-    setSelectedItem(selecteditem);
-   ContextData?.setSidebarId(sid);
+//   useEffect(() => {
+//     const selecteditem = ContextData?.GlobalSelectedItem?.find(item => item.album.id === params?.slug);
+//     const sid = ContextData?.GlobalSelectedItem?.findIndex(item => item.album.id === params?.slug);
+//     setSelectedItem(selecteditem);
+//    ContextData?.setSidebarId(sid);
 
-    if (selecteditem) {
-      setDuration(convertToMinutesAndSeconds(selecteditem.album.tracks.items[0].duration_ms));
-    }
-  }, [ContextData, params]);
+//     if (selecteditem) {
+//       setDuration(convertToMinutesAndSeconds(selecteditem.album.tracks.items[0].duration_ms));
+//     }
+//   }, [ContextData, params]);
 
   useEffect(() => {
-    console.log("selecteditem", SelectedItem);
+    console.log("PlayListData", ContextData?.PlayListData);
     console.log("ss", session);
-  }, [SelectedItem])
+  }, [ContextData])
 
-  const convertToMinutesAndSeconds = (ms) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${minutes} min ${seconds} sec`;
-  };
+
 
   return (
     <div className={`min-h-screen w-full rounded-lg`}>
@@ -62,9 +60,9 @@ const page = ({ params }) => {
 
         <div className="flex justify-start items-center gap-x-5 font-semibold transition-opacity duration-300">
           <section>
-            {SelectedItem?.album?.images[0]?.url && (
+            {ContextData?.PlayListData && (
               <Image
-                src={SelectedItem?.album?.images[0]?.url || "/placeholder.png"}
+                src={ContextData?.PlayListData?.images[0]?.url || "/placeholder.png"}
                 height="1000"
                 width="1000"
                 alt=""
@@ -74,30 +72,27 @@ const page = ({ params }) => {
           </section>
           <section className="flex flex-col justify-between items-start">
             <span className="font-semibold text-base hidden md:block">
-              {SelectedItem?.album?.album_type}
+              {ContextData?.PlayListData?.type}
             </span>
             <span className="font-semibold text-base">
-              {SelectedItem?.album?.name}
+              {ContextData?.PlayListData?.name}
             </span>
 
             <section className="flex justify-start items-center">
               <span className="font-semibold hover:underline hover:cursor-pointer text-base mt-2 sm:mt-0">
-                { SelectedItem?.album?.artists[0]?.name}
+                { ContextData?.PlayListData?.owner?.display_name}
               </span>
-              {SelectedItem && <span className="hidden md:block">&nbsp; &sdot; &nbsp;</span>}
-              {SelectedItem && <span className="font-semibold hidden md:block">
-                {SelectedItem?.album?.release_date.split("-")[0]} &sdot; &nbsp;
+              {ContextData?.PlayListData && <span className="hidden md:block">&nbsp; &sdot; &nbsp;</span>}
+              {ContextData?.PlayListData && <span className="font-semibold hidden md:block">
+                {ContextData?.PlayListData?.tracks?.total} songs
               </span>}
-              <span className="font-semibold hidden md:block">
-                {SelectedItem && convertToMinutesAndSeconds(SelectedItem?.album?.tracks?.items[0].duration_ms)}
-              </span>
             </section>
           </section>
         </div>
       </section>
 
       <div className="">
-        <TrackList data={SelectedItem?.album?.tracks?.items} />
+        <PlayListTracks id={params?.slug}/>
       </div>
     </div>
   );
