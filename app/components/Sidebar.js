@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import SpotifyContext from "../Context/SpotifyContext";
+import SidebarCards from "./Sidebar/SidebarCards";
 
 const Sidebar = () => {
   const [data, setData] = useState(null);
@@ -27,7 +28,7 @@ const Sidebar = () => {
 
   const getDataa = async () => {
     try {
-      const getData = await fetch("https://api.spotify.com/v1/albums/1QOwvBk3LNWAaEvARxPDNd", {
+      const getData = await fetch("https://api.spotify.com/v1/me/albums", {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${session?.accessToken}`,
@@ -39,9 +40,9 @@ const Sidebar = () => {
       }
 
       const data = await getData.json();
-      setData(data);
+      setData(data?.items);
       ContextData.setToken(session?.accessToken);
-      ContextData.setPlaylist(data);
+      ContextData.SetGlobalSelectedItem(data?.items);
       ContextData.setUserName(session?.user?.name);
     } catch (error) {
       console.error("Error fetching album data:", error);
@@ -108,30 +109,7 @@ const Sidebar = () => {
         </TooltipProvider>
       </section>
 
-      {data && (
-        <section
-          className="flex justify-between items-center gap-2 hover:cursor-pointer hover:bg-[#2a2a2a]  rounded-lg lg:p-3"
-          onClick={() => router.push(`/album/${data.id}`)}
-        >
-          <section>
-            <Image
-              src={data.images[0].url}
-              width="1000"
-              height="1000"
-              alt={`${data.artists[0].name} pic`}
-              className="h-10 w-10 object-contain lg:mr-1"
-            />
-          </section>
-          <section>
-            <p className="hidden lg:block text-xs text-white font-bold truncate">
-              {data.name}
-            </p>
-            <p className="hidden lg:block text-xs text-[#b3b3b3]">
-              {data.type} &sdot; {data.artists[0].name}
-            </p>
-          </section>
-        </section>
-      )}
+<SidebarCards data={data}/>
     </div>
   );
 };

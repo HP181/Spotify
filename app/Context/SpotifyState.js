@@ -6,7 +6,8 @@ const SpotifyState = (props) => {
 
   const [Token, setToken] = useState("");
   const [UserName, setUserName] = useState("");
-  const [Playlist, setPlaylist] = useState(null);
+  const [GlobalSelectedItem, SetGlobalSelectedItem] = useState([]);
+  const [SelectedAlbumIndex, SetSelectedAlbumIndex] = useState(null);
   const [SelectedSong, setSelectedSong] = useState(null);
   
   // const [PlaylistId, setPlaylistId] = useState("");
@@ -18,7 +19,7 @@ const SpotifyState = (props) => {
     // const [PlaylistTracksDuration, setPlaylistTracksDuration] = useState("");
 
   return (
-    <SpotifyContext.Provider value={{ Token, setToken, Playlist, setPlaylist, UserName, setUserName, SelectedSong, setSelectedSong }}>
+    <SpotifyContext.Provider value={{ Token, setToken, GlobalSelectedItem, SetGlobalSelectedItem, UserName, setUserName, SelectedSong, setSelectedSong, SetSelectedAlbumIndex, SelectedAlbumIndex }}>
       {props.children}
     </SpotifyContext.Provider>
   );

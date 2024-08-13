@@ -1,44 +1,47 @@
-// components/TrackList.js
-"use client"
-import React, { useContext } from 'react';
-import SpotifyContext from '../Context/SpotifyContext';
-import ConverToMinutesAndSecondsAndDigits from '@/lib/ConverToMinutesAndSecondsAndDigits';
+"use client";
+import ConverToMinutesAndSecondsAndDigits from "@/lib/ConverToMinutesAndSecondsAndDigits";
+
+const TrackList = ({ data, name }) => {
 
 
-const TrackList = () => {
-
-    
-  const ContextData = useContext(SpotifyContext);
+  console.log("getData :", data);
+  console.log("getData name :", name);
 
   return (
-    <div className="container mx-auto px-4 py-6">
-    <div className="w-full bg-gray-900 text-white rounded-lg shadow-lg overflow-hidden">
-      <div className="p-4">
-        <table className="table-auto w-full">
-          <thead>
-            <tr className="text-left text-xs md:text-base">
-              <th>#</th>
-              <th>Title</th>
-              <th className='hidden md:block'>Artist</th>
-              <th>Duration</th>
+    <div className="text-white p-6 rounded-lg">
+      <table className="w-full text-left">
+        <thead>
+          <tr className="text-xs uppercase text-gray-400 md:text-sm">
+            <th className="w-10 p-2">#</th>
+            <th className="p-2">Title</th>
+            <th className="hidden md:table-cell p-2">Artist</th>
+            <th className="w-20 p-2 text-right">Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data?.map((track, index) => (
+            <tr
+              key={index}
+              className="group transition-all  ease-in-out"
+              onClick={() => {console.log("tt", track)}}
+            >
+              <td className="p-2 group-hover:bg-gray-800 group-hover:cursor-pointer group-hover:rounded-l-lg transition-all  ease-in-out">
+                {index + 1}
+              </td>
+              <td className="p-2 group-hover:bg-gray-800 group-hover:cursor-pointer transition-all  ease-in-out">
+                {track?.name}
+              </td>
+              <td className="hidden md:table-cell p-2 group-hover:bg-gray-800 group-hover:cursor-pointer transition-all  ease-in-out">
+                {name}
+              </td>
+              <td className="p-2 text-center group-hover:bg-gray-800 group-hover:rounded-r-lg group-hover:cursor-pointer transition-all  ease-in-out">
+                {ConverToMinutesAndSecondsAndDigits(track?.duration_ms)}
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {ContextData?.Playlist?.tracks?.items?.map((track, index) => (
-              <tr key={track.id} className="border-b border-gray-700 text-white text-xs md:text-base overflow-scroll" onClick={() => ContextData?.setSelectedSong(track?.uri)}>
-                <td className="p-2">{index + 1}</td>
-                <td className="p-2 text-green-400 truncate hover:underline hover:cursor-pointer">
-                  <p>{track?.name}</p>
-                </td>
-                <td className="p-2 hidden md:block">{track?.artists[0]?.name}</td>
-                <td className="p-2">{ConverToMinutesAndSecondsAndDigits(track?.duration_ms)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </tbody>
+      </table>
     </div>
-  </div>
   );
 };
 

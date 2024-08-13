@@ -1,7 +1,6 @@
 "use client"
 import { useState, useContext, useEffect } from 'react';
 import { useSession, signIn, signOut } from "next-auth/react";
-import Gradients from '@/lib/Gradients';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -17,28 +16,57 @@ import TrackList from '../components/TrackList';
 
 export default function Component() {
   const [Duration, setDuration] = useState("")
+  const [opacity, setOpacity] = useState(0)
+  const [textOpacity, setTextOpacity] = useState(0)
+
+  const colors = [
+    'from-indigo-500',
+    'from-blue-500',
+    'from-green-500',
+    'from-red-500',
+    'from-yellow-500',
+    'from-pink-500',
+    'from-purple-500'
+]
+
+
   const { data: session } = useSession();
   console.log("s", session);
 
   const ContextData = useContext(SpotifyContext);
 
-  console.log("avb", ContextData?.Playlist);
+  // console.log("avb", ContextData?.Playlist);
 
   // Set the initial gradient state directly with a random selection
-  const [gradient] = useState(() => {
-    const randomIndex = Math.floor(Math.random() * Gradients.length);
-    return Gradients[randomIndex];
-  });
 
-  useEffect(() => {
-    const duration = convertToMinutesAndSeconds(ContextData?.Playlist?.tracks?.items[0]?.duration_ms)
-    setDuration(duration)
-  }, [ContextData])
+//   function changeOpacity(scrollPos) {
+//     // scrollPos = 0 -> opacity = 0 
+//     // scrollPos = 300 -> opacity = 1, textOpacity = 0
+//     // scrollPos = 310 -> opacity = 1, textOpacity = 1
+//     const offset = 300
+//     const textOffset = 10
+//     if (scrollPos < offset) {
+//         const newOpacity = 1 - ((offset - scrollPos) / offset)
+//         setOpacity(newOpacity)
+//         setTextOpacity(0)
+//     } else {
+//         setOpacity(1)
+//         const delta = scrollPos - offset
+//         const newTextOpacity = 1 - ((textOffset - delta) / textOffset)
+//         setTextOpacity(newTextOpacity)
+//     }
+// }
+
+  
+//   useEffect(() => {
+//     setColor(shuffle(colors).pop())
+// }, [params?.slug])
+ 
 
   return (
     <div className=" h-[89vh] w-full rounded-lg "
     >
-      <section className=' h-44 rounded-lg p-1 sticky top-0' style={{ background: gradient }}>
+      {/* <section className=' h-44 rounded-lg p-1 sticky top-0'>
   
         <div className='flex justify-end items-center mt-1 mr-1 gap-x-5'>
 
@@ -84,8 +112,8 @@ export default function Component() {
           </section>
           </section>
         </div>
-      </section>
-
+      </section> */}
+<p>Home Page</p>
       <div>
       {/* <h1 className="text-center text-2xl font-bold text-gray-800 mb-4">Spotify Track List</h1> */}
 
@@ -95,8 +123,7 @@ export default function Component() {
 
       
     </div>
-      {/* Signed in as {session.user.email} <br /> */}
-      {/* <button onClick={() => signOut()}>Sign out</button> */}
+     
     </div>
   );
 }
