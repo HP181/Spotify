@@ -24,7 +24,6 @@ export default function TrackList({ tracks }) {
         throw new Error('Failed to play track');
       }
 
-      // Set the currently playing track URI
       setCurrentlyPlayingUri(uri);
     } catch (error) {
       console.error('Error playing track:', error);
