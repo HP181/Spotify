@@ -4,8 +4,8 @@ import Link from 'next/link';
 export default function AlbumList({ albums }) {
   return (
     <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {albums?.map(album => (
-        <div>
+      {albums?.map((album, index ) => (
+        <div key={index}>
           <div className="block bg-transparent hover:bg-[#2a2a2a] p-4 cursor-pointer rounded-lg transition duration-300">
             <div className="mb-4">
               <Image
