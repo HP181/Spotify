@@ -9,7 +9,7 @@ import { shuffle } from "lodash";
 import { Button } from "@/components/ui/button";
 import PlayListTracks from "@/app/components/PlayLists/PlayListTracks";
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
   const [SelectedItem, setSelectedItem] = useState(null);
   const [Duration, setDuration] = useState("");
   const [color, setColor] = useState('');
@@ -98,4 +98,4 @@ const page = ({ params }) => {
   );
 }
 
-export default page;
+export default Page;

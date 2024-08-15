@@ -8,7 +8,7 @@ import TrackList from "@/app/components/TrackList";
 import { shuffle } from "lodash";
 import { Button } from "@/components/ui/button";
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
   const [SelectedItem, setSelectedItem] = useState(null);
   const [Duration, setDuration] = useState("");
   const [color, setColor] = useState('');
@@ -103,4 +103,4 @@ const page = ({ params }) => {
   );
 }
 
-export default page;
+export default Page;
