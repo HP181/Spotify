@@ -2,7 +2,10 @@
 import SpotifyContext from '@/app/Context/SpotifyContext';
 import Image from 'next/image'
 import { useRouter } from 'next/navigation';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
+
+
+
 
 const PlayListCards = ({data}) => {
 
@@ -15,6 +18,10 @@ const PlayListCards = ({data}) => {
 
     }
 
+    useEffect(() => {
+      console.log("poll", data);
+    })
+
 
     const router = useRouter();
   return (
@@ -26,8 +33,11 @@ const PlayListCards = ({data}) => {
       onClick={() => handleClick(item)}
     //   onClick={() => router.push(`/${item?.album?.type}/${item?.album?.id}`)}
     >
+      {/* {item?.images[0]?.url ? (
+
+      )} */}
       <Image
-        src={item?.images[0].url}
+        src={item?.images == null ? '/SpotifyAlter.png' : item?.images[0]?.url}
         width="60"
         height="60"
         alt={`${item?.album?.artists[0]?.name} pic`}
@@ -42,6 +52,9 @@ const PlayListCards = ({data}) => {
           {item?.owner?.display_name}
         </p>
       </div>
+
+  
+
     </div>
   ))}
 

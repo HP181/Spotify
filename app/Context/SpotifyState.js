@@ -50,6 +50,7 @@ const SpotifyState = (props) => {
           setSelectedSong(uri),
             SetSelectedAlbumIndex(index)
         } else if (pathname.split('/')[1] === "playlist") {
+         
           setSelectedPlayListSong(uri),
             setPlayListTrackIndex(index)
         }

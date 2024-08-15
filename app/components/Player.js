@@ -168,8 +168,8 @@ const Player = () => {
             alt=""
           />
         </div>
-        <div className="flex flex-col justify-center items-center gap-y-1">
-          <p>{PlayerData?.item?.name}</p>
+        <div className="flex flex-col justify-center items-center gap-y-1 p-1 mr-3 text-sm ">
+          <p className="">{PlayerData?.item?.name}</p>
           <div className="hidden lg:flex gap-x-1">
             {PlayerData?.item?.artists.map((artist, index) => (
               <span className="text-xs" key={index}>

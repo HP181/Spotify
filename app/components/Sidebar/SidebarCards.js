@@ -18,11 +18,11 @@ const SidebarCards = ({data}) => {
 
     const router = useRouter();
   return (
-  <section className="flex flex-col items-start gap-4">
+  <section className="flex flex-col items-start gap-4 w-full">
   {data?.map((item, index) => (
     <div
       key={index}
-      className="flex items-center gap-4 hover:cursor-pointer hover:bg-[#2a2a2a] p-2 rounded-lg w-full"
+      className="flex items-center gap-4 hover:cursor-pointer hover:bg-[#2a2a2a] p-2 rounded-lg"
       onClick={() => handleClick(index)}
     //   onClick={() => router.push(`/${item?.album?.type}/${item?.album?.id}`)}
     >

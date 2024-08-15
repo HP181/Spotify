@@ -62,7 +62,7 @@ const page = ({ params }) => {
           <section>
             {ContextData?.PlayListData && (
               <Image
-                src={ContextData?.PlayListData?.images[0]?.url || "/placeholder.png"}
+                src={ ContextData?.PlayListData?.images == null ? '/SpotifyAlter.png' : ContextData?.PlayListData?.images[0]?.url}
                 height="1000"
                 width="1000"
                 alt=""
