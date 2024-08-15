@@ -163,7 +163,6 @@ const Sidebar = () => {
 
   return (
     <div className="h-[87vh] flex flex-col justify-between items-center flex-1 p-1">
-      {/* Navigation Links */}
       <section className="h-44 flex flex-col justify-between items-center mb-5">
         <Link
           href="/"
